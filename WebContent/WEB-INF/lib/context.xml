@@ -2,7 +2,7 @@
 <!DOCTYPE configuration>
 <!-- 上記はEclipseの警告を消すための記述です。 -->
 
-<!-- mysqlように変更する必要あり
+
 <Context reloadable="true">
 	<Resource
 		name="jdbc/exam"
@@ -14,4 +14,3 @@
 		password=""
 	/>
 </Context>
--->
