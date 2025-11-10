@@ -5,8 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import bean.User;
 
@@ -63,47 +61,47 @@ public class UserDao extends Dao{
 
 	}
 
-	public List<User> filter(int id,String name,String email,String job,int classnum) throws Exception{
-		List<User> list = new ArrayList<>();
-		Connection connection = getConnection();
-		PreparedStatement statement = null;
-		//リザルトセット
-		ResultSet rSet = null;
-		//SQL文の条件
-		String condition = "and name=? and class_num=?";
-		//SQL文のソート
-		String order = " order by no asc";
-
-		String conditionIsAttend = "";
-
-
-		try {
-			statement =connection.prepareStatement(baseSql + conditionIsAttend + order);
-			statement.setString(1,school.getCd());
-			rSet = statement.executeQuery();
-			list = postFilter(rSet,school);
-		} catch (Exception e){
-			throw e;
-		} finally {
-			if (statement != null) {
-				try{
-					statement.close();
-				} catch (SQLException sqle){
-					throw sqle;
-				}
-			}
-			if (connection != null){
-				try{
-					connection.close();
-				} catch (SQLException sqle){
-					throw sqle;
-				}
-			}
-		}
-
-
-		return list;
-	}
+//	public List<User> filter(int id,String name,String email,String job,int classnum) throws Exception{
+//		List<User> list = new ArrayList<>();
+//		Connection connection = getConnection();
+//		PreparedStatement statement = null;
+//		//リザルトセット
+//		ResultSet rSet = null;
+//		//SQL文の条件
+//		String condition = "and =? and class_num=?";
+//		//SQL文のソート
+//		String order = " order by no asc";
+//
+//		String conditionIsAttend = "";
+//
+//
+//		try {
+//			statement =connection.prepareStatement(baseSql + conditionIsAttend + order);
+//			statement.setString(1,school.getCd());
+//			rSet = statement.executeQuery();
+//			list = postFilter(rSet,school);
+//		} catch (Exception e){
+//			throw e;
+//		} finally {
+//			if (statement != null) {
+//				try{
+//					statement.close();
+//				} catch (SQLException sqle){
+//					throw sqle;
+//				}
+//			}
+//			if (connection != null){
+//				try{
+//					connection.close();
+//				} catch (SQLException sqle){
+//					throw sqle;
+//				}
+//			}
+//		}
+//
+//
+//		return list;
+//	}
 
 
 
@@ -122,7 +120,7 @@ public class UserDao extends Dao{
 				//学生が存在しない場合
 				//プリペアードスタートメントにINSERT文をセット
 				statement = connection.prepareStatement(
-						"insert into student (id,name,email,password,job,class) values(?,?,?,?,?,?)");
+						"insert into users (id,name,email,password,job,class) values(?,?,?,?,?,?)");
 				//プリペアードスタートメントに値をバインド
 				statement.setInt(1, user.getId());
 				statement.setString(2,user.getName());
