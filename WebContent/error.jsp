@@ -18,8 +18,7 @@
 		<p>エラーが発生しました</p>
 
 		<footer	class="py-2 my-4 bg-dark bg-opacity-10 border-top border-3 align-bottom">
-			<p class="text-center text-muted mb-0">&copy; 2023 TIC </p>
-			<p class="text-center text-muted mb-0">大原学園</p>
+			<p class="text-center text-muted mb-0">&copy; 2025 チームD </p>
 		</footer>
 
 	</div>
