@@ -32,7 +32,7 @@ public class AttendanceDao extends Dao{
 		Connection connection = getConnection();
 		PreparedStatement statement = null;
 		PreparedStatement Statement = null;
-		UserDao uDao = new  UserDao();
+
 		String status="";
 		if (C > 1240 ){
 			status ="absent";
