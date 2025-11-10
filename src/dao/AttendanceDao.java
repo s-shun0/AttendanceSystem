@@ -8,47 +8,54 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import bean.Attendance;
-import bean.User;
-
 
 public class AttendanceDao extends Dao{
 
 	private String baseSql="select * from attendance where id=? ";
 
-	public boolean attend(int id,String password, ) throws Exception{
+	public boolean attend(int id,String password) throws Exception{
+
 
 		Date date = new Date();
 		//データベース用
 		SimpleDateFormat  fm1 = new SimpleDateFormat("yyyy-mm-dd");
 		SimpleDateFormat  fm2 = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+
+		String FM1 =	fm1.format(date);
+		String FM2 =	fm2.format(date);
+
 		//遅刻・欠席の判定用
-		SimpleDateFormat  check = new SimpleDateFormat(" hhmm");
+		SimpleDateFormat  check = new SimpleDateFormat("hhmm");
+		String c =	check.format(date);
+		int C = Integer.parseInt(c);
 
 		Connection connection = getConnection();
 		PreparedStatement statement = null;
-
-
-
+		PreparedStatement Statement = null;
+		UserDao uDao = new  UserDao();
+		String status="";
+		if (C > 1240 ){
+			status ="absent";
+		}else if(C >915){
+			status ="late_early";
+		}else{
+			status = "present";
+		}
+		int count=0;
 		try{
-			//プリペアードスタートメントにSQL文をセット
-			statement = connection.prepareStatement(baseSql + conddition );
-			//プリペアードスタートメントに学校コードをバインド
+
+			statement = connection.prepareStatement(baseSql);
+
 			statement.setInt(1,id);
-			statement.setString(2,password);
-
-			Attendance attend = new Attendance();
-			User user = new User();
 			ResultSet rSet = statement.executeQuery();
-			if (rSet.next()){
-				//学生インスタンスに検索結果をセット
-				user.setId(rSet.getInt("id"));
-				user.setPass(rSet.getString("password"));
-				
-			} else{
-				attend = null;
+			if (rSet != null){
+				Statement = connection.prepareStatement("insert into attendance (student_id,date,status,updatetime) values(?,?,?,?)");
+				Statement.setInt(1, id);
+				Statement.setString(2,FM1);
+				Statement.setString(3, status);
+				Statement.setString(4, FM2);
 			}
-
+		count = Statement.executeUpdate();
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -68,13 +75,11 @@ public class AttendanceDao extends Dao{
 				}
 			}
 		}
-
-
-		return true;
+		if (count > 0){
+			return true;
+		} else{
+			return false;
+		}
 	}
-
-
-
-
 
 }
