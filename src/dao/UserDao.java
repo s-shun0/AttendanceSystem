@@ -1,5 +1,162 @@
 package dao;
 
-public class UserDao {
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import bean.User;
+
+public class UserDao extends Dao{
+
+	private String baseSql = "select * from users where id=?";
+
+	public User get(int id) throws Exception {
+		User user = new User();
+		Connection connection = getConnection();
+		PreparedStatement statement = null;
+
+		try{
+			//プリペアードスタートメントにSQL文をセット
+			statement = connection.prepareStatement("select * from users where no=?");
+			//学生番号をバインド
+			statement.setInt(1,id);
+			//実行
+			ResultSet rSet = statement.executeQuery();
+
+
+			if (rSet.next()){
+				//学生インスタンスに検索結果をセット
+				user.setId(rSet.getInt("id"));
+				user.setName(rSet.getString("name"));
+				user.setEmail(rSet.getString("email"));
+				user.setPass(rSet.getString("password"));
+				user.setJob(rSet.getString("job"));
+				user.setClassnum(rSet.getString("class"));
+				//学校フィールドには学校コードで検索した学校インスタンスをセット
+//				user.setSchool(schoolDao.get(rSet.getString("school_cd")));
+			} else{
+				user = null;
+			}
+		} catch (Exception e){
+			throw e;
+		}finally {
+			if (statement != null){
+				try {
+					statement.close();
+				} catch (SQLException sqle){
+					throw sqle;
+				}
+			}
+			if (connection != null){
+				try {
+					connection.close();
+				} catch(SQLException e){
+					throw e;
+				}
+			}
+		}
+		return user;
+
+	}
+
+	public List<User> filter(int id,String name,String email,String job,int classnum) throws Exception{
+		List<User> list = new ArrayList<>();
+		Connection connection = getConnection();
+		PreparedStatement statement = null;
+		//リザルトセット
+		ResultSet rSet = null;
+		//SQL文の条件
+		String condition = "and name=? and class_num=?";
+		//SQL文のソート
+		String order = " order by no asc";
+
+		String conditionIsAttend = "";
+
+
+		try {
+			statement =connection.prepareStatement(baseSql + conditionIsAttend + order);
+			statement.setString(1,school.getCd());
+			rSet = statement.executeQuery();
+			list = postFilter(rSet,school);
+		} catch (Exception e){
+			throw e;
+		} finally {
+			if (statement != null) {
+				try{
+					statement.close();
+				} catch (SQLException sqle){
+					throw sqle;
+				}
+			}
+			if (connection != null){
+				try{
+					connection.close();
+				} catch (SQLException sqle){
+					throw sqle;
+				}
+			}
+		}
+
+
+		return list;
+	}
+
+
+
+
+
+	public boolean insert(User user) throws Exception{
+		Connection connection = getConnection();
+		//プリペアードスタートメント
+		PreparedStatement statement = null;
+		int count = 0;
+
+
+		try{
+			User old = get(user.getId());
+			if (old == null){
+				//学生が存在しない場合
+				//プリペアードスタートメントにINSERT文をセット
+				statement = connection.prepareStatement(
+						"insert into student (id,name,email,password,job,class) values(?,?,?,?,?,?)");
+				//プリペアードスタートメントに値をバインド
+				statement.setInt(1, user.getId());
+				statement.setString(2,user.getName());
+				statement.setString(3, user.getEmail());
+				statement.setString(4,user.getPass());
+				statement.setString(5,user.getJob());
+				statement.setString(6,user.getClassnum());
+			}
+			count = statement.executeUpdate();
+		} catch (Exception e){
+			throw e;
+		} finally {
+			if (statement != null){
+				try {
+					statement.close();
+				} catch (SQLException sqle){
+					throw sqle;
+				}
+			}
+			if (connection != null){
+				try {
+					connection.close();
+				} catch (SQLException sqle){
+					throw sqle;
+				}
+			}
+		}
+
+		if (count > 0){
+			return true;
+		} else{
+			return false;
+	}
+	}
 }
+
+
