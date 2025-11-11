@@ -6,13 +6,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import bean.Attendance;
+import bean.TotalAbsences;
 
 
 public class AttendanceDao extends Dao{
 
 	private String baseSql="select * from attendance where id=? ";
 
+	//qrコードで出席
 	public boolean attend(int id,String password) throws Exception{
 
 
@@ -81,5 +89,69 @@ public class AttendanceDao extends Dao{
 			return false;
 		}
 	}
+
+	public List<Attendance> all(int id)throws Exception{
+		List<TotalAbsences> list = new ArrayList();
+		Connection connection = getConnection();
+		PreparedStatement statement = null;
+
+		//今年
+		LocalDateTime nowDate = LocalDateTime.now();
+		DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("yyyy"); // ①
+		String year = dtf1.format(nowDate);
+
+		int tmp = Integer.parseInt(year) + 1;
+		String next = parseString(tmp);
+		String base="select * total abusences where id=? ";
+		String condition="order by date asc";
+
+		try{
+			for(int i=1;i<=12;i++){
+				if (i>10){
+
+				}else{
+				statement = connection.prepareStatement(base+" date" +condition);
+
+				}
+				statement.setInt(1,id);
+			}
+			ResultSet rSet = statement.executeQuery();
+			if (rSet != null){
+				Statement = connection.prepareStatement("insert into attendance (student_id,date,status,updatetime) values(?,?,?,?)");
+				Statement.setInt(1, id);
+				Statement.setString(2,FM1);
+				Statement.setString(3, status);
+				Statement.setString(4, FM2);
+			}
+
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException sqle) {
+					throw sqle;
+				}
+			}
+			//コネクションを閉じる
+			if (connection != null){
+				try {
+					connection.close();
+				} catch (SQLException sqle){
+					throw sqle;
+				}
+			}
+		}
+	}
+
+	private String parseString(int tmp) {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
+
+
+
+	//主席編集の追加
 
 }
