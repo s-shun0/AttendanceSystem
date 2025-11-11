@@ -1,16 +1,32 @@
 /* ハンバーガーメニュー本体 */
 
-.hamburger {
-  position: fixed;
-  top: 13px;
+/* コンテナを固定 */
+.container {
+  position: fixed;       /* ← ここを追加！ */
+  top: 10px;
   right: 20px;
-  width: 30px;
-  cursor: pointer;
-  z-index: 10; /* メニューより前面に表示 */
-  transition: transform 0.5s ease; /* 回転アニメーション用 */
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  z-index: 10;
 }
 
-/* ハンバーガーメニュー内の3本線 */
+/* ログアウトボタン */
+.logout a {
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+}
+
+/* ハンバーガーメニュー */
+.hamburger {
+  width: 30px;
+  cursor: pointer;
+  transition: transform 0.5s ease;
+}
+
+/* ハンバーガーの3本線 */
 .hamburger span {
   display: block;
   height: 3px;
@@ -20,21 +36,18 @@
   transition: all 0.5s ease;
 }
 
-/* メニュー展開時のハンバーガーアニメーション（バツ印に変形） */
+/* メニュー展開時（バツ印アニメーション） */
 .hamburger.active {
-  transform: rotate(360deg); /* 全体を回転 */
+  transform: rotate(360deg);
 }
-
 .hamburger.active span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px); /* 左上線を斜めに */
+  transform: rotate(45deg) translate(5px, 5px);
 }
-
 .hamburger.active span:nth-child(2) {
-  opacity: 0; /* 真ん中線を非表示 */
+  opacity: 0;
 }
-
 .hamburger.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(6px, -6px); /* 右下線を斜めに */
+  transform: rotate(-45deg) translate(6px, -6px);
 }
 
 /* メニュー全体のスタイル（初期は画面右外に非表示） */
