@@ -13,7 +13,6 @@ import java.util.Date;
 import java.util.List;
 
 import bean.Attendance;
-import bean.TotalAbsences;
 
 
 public class AttendanceDao extends Dao{
@@ -91,7 +90,7 @@ public class AttendanceDao extends Dao{
 	}
 
 	public List<Attendance> all(int id)throws Exception{
-		List<TotalAbsences> list = new ArrayList();
+		List<Attendance> list = new ArrayList();
 		Connection connection = getConnection();
 		PreparedStatement statement = null;
 
@@ -118,10 +117,15 @@ public class AttendanceDao extends Dao{
 
 				}
 				statement.setInt(1,id);
-			}
-			ResultSet rSet = statement.executeQuery();
-			if (rSet != null){
-
+				Attendance attend = new Attendance();
+				ResultSet rSet = statement.executeQuery();
+				if (rSet.next()){
+					attend.setId(rSet.getInt("student_id"));
+					attend.setDate(rSet.getString("date"));
+					attend.setStatus(rSet.getString("status"));
+					attend.setUpdate(rSet.getString("updatetime"));
+				}
+				list.add(attend);
 			}
 
 		} catch (Exception e) {
@@ -142,7 +146,9 @@ public class AttendanceDao extends Dao{
 					throw sqle;
 				}
 			}
+
 		}
+		return list;
 	}
 
 
