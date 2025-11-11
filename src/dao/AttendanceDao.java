@@ -98,30 +98,28 @@ public class AttendanceDao extends Dao{
 		//今年
 		LocalDateTime nowDate = LocalDateTime.now();
 		DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("yyyy"); // ①
+
+		String month="";
 		String year = dtf1.format(nowDate);
 
 		int tmp = Integer.parseInt(year) + 1;
-		String next = parseString(tmp);
-		String base="select * total abusences where id=? ";
+		String next = String.valueOf(tmp);
+		String base="select * attendance where id=? ";
 		String condition="order by date asc";
-
 		try{
 			for(int i=1;i<=12;i++){
-				if (i>10){
-
+				month=
+				if (i<10){
+					statement = connection.prepareStatement(base+"and date like %"+year+"-"+"%" +condition);
 				}else{
-				statement = connection.prepareStatement(base+" date" +condition);
+					statement = connection.prepareStatement(base+"and date like %"+next+"-"+"%" +condition);
 
 				}
 				statement.setInt(1,id);
 			}
 			ResultSet rSet = statement.executeQuery();
 			if (rSet != null){
-				Statement = connection.prepareStatement("insert into attendance (student_id,date,status,updatetime) values(?,?,?,?)");
-				Statement.setInt(1, id);
-				Statement.setString(2,FM1);
-				Statement.setString(3, status);
-				Statement.setString(4, FM2);
+
 			}
 
 		} catch (Exception e) {
@@ -143,11 +141,6 @@ public class AttendanceDao extends Dao{
 				}
 			}
 		}
-	}
-
-	private String parseString(int tmp) {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
 	}
 
 
