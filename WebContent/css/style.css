@@ -12,6 +12,7 @@ body {
 }
 
 body {
+  overflow: hidden; /* 縦スクロール防止 */             /*不要なら決してOK！！！*/
   overflow-x: hidden; /* 横スクロール防止 */
 }
 
@@ -21,7 +22,7 @@ body {
 header {
   width: 100%;
   height: 50px;
-  background-color: white;
+  background-color: oldlace;
   color: black;
   display: flex;
   justify-content: center;
@@ -38,19 +39,89 @@ header {
   height: 50px; /* スペース確保用（ダミー） */
 }
 
+/* =====================================
+	画面全体のサイズ調節
+====================================== */
 .wrapper {
   display: flex;
   flex-direction: column;
   min-height: 85vh; /* 画面全体の高さ */
 }
-
+/*error.jsp、password_reset_sendのみ*/
 .content {
   flex: 1; /* メインコンテンツが残りのスペースを占める */
-  display: flex;
+  display: flex;  /*２つの要素を横並びに*/
   justify-content: center; /* 水平方向中央 */
   align-items: center;     /* 垂直方向中央 */
   text-align: center;
 }
+
+/* ============================
+	student_password_reset.jsp
+============================= */
+/*画面全体のサイズ調整*/
+.student-password-reset-content{
+  flex: 1; /* メインコンテンツが残りのスペースを占める */
+  justify-content: center; /* 水平方向中央 */
+  align-items: center;     /* 垂直方向中央 */
+  text-align: center;
+}
+/*２つの要素を横並びにする設定*/
+.pass_reset,.pass_reset_again{
+	display: flex;  /*２つの要素を横並びに*/
+	justify-content: center; /* 水平方向中央 */
+	align-items: center;     /* 垂直方向中央 */
+}
+
+.student-password-reset-content .form-control{
+  margin-top:10px;	/*隣のh2タグと位置が合わないため上に余白を作り調節*/
+  width: 600px;   	/* 横幅 */
+  height: 40px;   	/* 高さ */
+  font-size:40px;
+}
+.student-password-reset-content label{
+	font-size:40px;
+}
+.student-password-reset-content div{
+  margin: 0;             /* デフォルト余白を消す */
+  text-align: left;      /* 左端をそろえる（※右にそろえたいなら right） */
+}
+/* =========================
+	password_reset_send.jsp
+========================== */
+/*「h2タグ」のサイズ、位置調節*/
+.text-password_reset{
+	text-align:center;
+	font-size:40px
+}
+/*「labelタグ」のサイズ調整*/
+.content label{
+  font-size: 60px;
+}
+/*「inputタグ」の枠組みのサイズ、位置調整*/
+.content .form-control{
+  margin-top:10px;	/*隣のh2タグと位置が合わないため上に余白を作り調節*/
+  width: 600px;   	/* 横幅 */
+  height: 40px;   	/* 高さ */
+  font-size:40px;
+}
+
+.send-btn{
+	position: fixed;
+	width:80px;
+	height:40px;
+	right: 120px;  /* 右から120px */
+	bottom: 100px; /* 下から100px（下固定したい場合） */
+}
+
+/* ==============
+	error.jsp
+================*/
+/*「h2タグ」のサイズ調整*/
+.text-error{
+	font-size:50px;
+}
+
 
 /* =====================================
    フッター
@@ -59,7 +130,7 @@ footer {
   position: fixed;
   width: 100%;
   height: 50px;
-  background-color: white;
+  background-color: whitesmoke;
   color: black;
   display: flex;
   justify-content: center;
