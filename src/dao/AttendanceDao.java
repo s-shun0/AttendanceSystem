@@ -108,11 +108,13 @@ public class AttendanceDao extends Dao{
 		String condition="order by date asc";
 		try{
 			for(int i=1;i<=12;i++){
-				month=
+				 ;
 				if (i<10){
-					statement = connection.prepareStatement(base+"and date like %"+year+"-"+"%" +condition);
+					month=String.valueOf(i+3);
+					statement = connection.prepareStatement(base+"and date like %"+year+"-"+month+"%" +condition);
 				}else{
-					statement = connection.prepareStatement(base+"and date like %"+next+"-"+"%" +condition);
+					month=String.valueOf(i-9);
+					statement = connection.prepareStatement(base+"and date like %"+next+"-"+month+"%" +condition);
 
 				}
 				statement.setInt(1,id);
