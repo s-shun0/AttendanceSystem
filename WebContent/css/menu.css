@@ -1,0 +1,81 @@
+/* ハンバーガーメニュー本体 */
+
+.hamburger {
+  position: fixed;
+  top: 13px;
+  right: 20px;
+  width: 30px;
+  cursor: pointer;
+  z-index: 10; /* メニューより前面に表示 */
+  transition: transform 0.5s ease; /* 回転アニメーション用 */
+}
+
+/* ハンバーガーメニュー内の3本線 */
+.hamburger span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background-color: #333;
+  margin: 5px 0;
+  transition: all 0.5s ease;
+}
+
+/* メニュー展開時のハンバーガーアニメーション（バツ印に変形） */
+.hamburger.active {
+  transform: rotate(360deg); /* 全体を回転 */
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px); /* 左上線を斜めに */
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0; /* 真ん中線を非表示 */
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px); /* 右下線を斜めに */
+}
+
+/* メニュー全体のスタイル（初期は画面右外に非表示） */
+.menu {
+  position: fixed;
+  top: 50px;           /* ヘッダーの下に表示 */
+  right: -100%;        /* 初期位置：画面外（右） */
+  width: 30%;         /* 必要に応じて調整可 */        /*ハンバーガーメニュー開いた時の横幅の調整20にすればいい*/
+  height: 100vh;       /* 全画面の高さ */
+  background-color: white;
+  padding: 20px;
+  box-sizing: border-box;
+  z-index: 5;          /* ハンバーガーより背面に */
+
+  transition: right 0.3s ease; /* スライドイン効果 */
+
+  display: flex;
+  flex-direction: row;         /* 横並びに */
+  align-items: center;         /* 縦中央揃え */
+  justify-content: space-between; /* 両端配置 */
+}
+
+/* メニュー内のリンクリスト（右側） */
+.menu ul {
+  width: 100%;     /*ここを１００に*/
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu ul li {
+  margin-bottom: 20px;
+}
+
+.menu ul li a {
+  text-decoration: none;
+  color: #333;
+  font-size: 30px;
+}
+
+/* メニューが開かれた状態（スライドイン） */
+.menu.open {
+  right: 0; /* 画面内に移動して表示 */
+}
