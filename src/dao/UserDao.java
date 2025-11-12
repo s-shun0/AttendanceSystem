@@ -155,6 +155,97 @@ public class UserDao extends Dao{
 			return false;
 		}
 	}
+
+	//emailのかくにん
+	public User send(String email) throws Exception{
+		Connection connection = getConnection();
+		PreparedStatement statement = null;
+		User user = new User();
+
+		try{
+			statement = connection.prepareStatement("select * from users where email=?");
+			statement.setString(1,email);
+
+			ResultSet rSet = statement.executeQuery();
+
+			if (rSet.next()){
+				//学生インスタンスに検索結果をセット
+				user.setId(rSet.getInt("id"));
+				user.setName(rSet.getString("name"));
+				user.setEmail(rSet.getString("email"));
+				user.setPass(rSet.getString("password"));
+				user.setJob(rSet.getString("job"));
+				user.setClassnum(rSet.getString("class"));
+
+
+			} else{
+				user = null;
+			}
+
+		}catch(Exception e){
+			throw e;
+		}finally{
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException sqle) {
+					throw sqle;
+				}
+			}
+			//コネクションを閉じる
+			if (connection != null){
+				try {
+					connection.close();
+				} catch (SQLException sqle){
+					throw sqle;
+				}
+			}
+		}
+		return user;
+	}
+
+	public boolean change(User user,String newpass) throws Exception{
+		Connection connection = getConnection();
+		PreparedStatement statement = null;
+		int count = 0;
+		try{
+			statement = connection.prepareStatement("update users set password=? where id=? and name=? and email=?");
+			statement.setString(1,newpass);
+			statement.setInt(2,user.getId() );
+			statement.setString(3, user.getName());
+			statement.setString(4,user.getEmail());
+
+			count = statement.executeUpdate();
+
+		}catch(Exception e){
+			throw e;
+		}finally{
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException sqle) {
+					throw sqle;
+				}
+			}
+			//コネクションを閉じる
+			if (connection != null){
+				try {
+					connection.close();
+				} catch (SQLException sqle){
+					throw sqle;
+				}
+			}
+		}
+
+
+
+		if (count > 0){
+			return true;
+		} else{
+			return false;
+		}
+	}
+
 }
 
 
