@@ -57,7 +57,7 @@
   right: -100%;        /* 初期位置：画面外（右） */
   width: 30%;         /* 必要に応じて調整可 */        /*ハンバーガーメニュー開いた時の横幅の調整20にすればいい*/
   height: 100vh;       /* 全画面の高さ */
-  background-color: white;
+  background-color: lightskyblue; /*メニューウィンドウの色の設定*/
   padding: 20px;
   box-sizing: border-box;
   z-index: 5;          /* ハンバーガーより背面に */
