@@ -19,13 +19,16 @@
 		<div id="header"></div>
 		<h2 class="text-password_reset fs-4 mt-5">パスワードリセットURL送信</h2>
 		<main class="content">
+		<form action="/attendsystem/SendResetMailServlet" method="post">
 			<label>メールアドレス</label>
 			<input class="form-control px-5 fs-5" autocomplete="off"
 				id="password-input" maxlength="20" name="email"
 				placeholder="内容未定のため保留中" style="ime-mode: disabled"
 				type="email" required />
+			<input class="btn btn btn-lg btn-primary" type="submit" name="email-send" value="メール送信"/>
+		</form>
 		</main>
-		<input class="btn btn btn-lg btn-primary" type="submit" name="login" value="メール送信"/>
+
 		<!-- フッター（JSで読み込み） -->
 	    <div id="footer"></div>
     </div>

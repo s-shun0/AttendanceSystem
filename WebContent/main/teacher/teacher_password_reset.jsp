@@ -34,7 +34,7 @@
 					type="password" required />
 			</div>
 		</main>
-		<input class="btn btn btn-lg btn-primary" type="submit" name="login" value="変更"/>
+		<input class="btn btn btn-lg btn-primary" type="submit" name="change" value="変更"/>
 		<!-- フッター（JSで読み込み） -->
 	    <div id="footer"></div>
     </div>
