@@ -17,7 +17,7 @@
 	<div class="wrapper">
 		<!-- ヘッダー（JSで読み込み） -->
 		<div id="header"></div>
-		<h2 class="text-password_reset fs-4 mt-5">学生パスワードリセット</h2>
+		<h2 class="text-password_reset fs-4 mt-5">教員パスワードリセット</h2>
 		<main class="password-reset-content">
 			<div class="pass_reset">
 				<label>パスワード変更</label>

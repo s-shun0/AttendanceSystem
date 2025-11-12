@@ -60,7 +60,7 @@ header {
 	student_password_reset.jsp
 ============================= */
 /*画面全体のサイズ調整*/
-.student-password-reset-content {
+.password-reset-content {
 	flex:1;
   display: flex;
   flex-direction: column; /* 縦並びに */
@@ -77,17 +77,17 @@ header {
   gap: 20px; /* ラベルと入力欄の間のスペース */
 }
 
-.student-password-reset-content .form-control {
+.password-reset-content .form-control {
   width: 400px;
   height: 40px;
   font-size: 20px;
 }
-.student-password-reset-content label {
+.password-reset-content label {
   width: 220px; /* ラベルの固定幅 */
   text-align: right; /* 右寄せで入力欄とそろえる */
   font-size: 30px;
 }
-.student-password-reset-content div{
+.password-reset-content div{
   margin: 0;             /* デフォルト余白を消す */
   text-align: left;      /* 左端をそろえる（※右にそろえたいなら right） */
 }
