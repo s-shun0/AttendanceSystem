@@ -25,7 +25,7 @@
 				placeholder="内容未定のため保留中" style="ime-mode: disabled"
 				type="email" required />
 		</main>
-		<input class="send-btn btn btn-lg btn-primary" type="submit" name="login" value="メール送信"/>
+		<input class="btn btn btn-lg btn-primary" type="submit" name="login" value="メール送信"/>
 		<!-- フッター（JSで読み込み） -->
 	    <div id="footer"></div>
     </div>

@@ -29,12 +29,12 @@
 			<div class="pass_reset_again">
 				<label>再入力</label>
 				<input class="form-control px-5 fs-5" autocomplete="off"
-					id="password-input" maxlength="20" name="password"
+					id="password-input-again" maxlength="20" name="password_confirm"
 					placeholder="内容未定のため保留中" style="ime-mode: disabled"
 					type="password" required />
 			</div>
 		</main>
-		<input class="send-btn btn btn-lg btn-primary" type="submit" name="login" value="メール送信"/>
+		<input class="btn btn btn-lg btn-primary" type="submit" name="login" value="変更"/>
 		<!-- フッター（JSで読み込み） -->
 	    <div id="footer"></div>
     </div>
