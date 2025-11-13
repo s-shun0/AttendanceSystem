@@ -28,7 +28,7 @@ public class CreateQRAction extends HttpServlet{
 
         //qrsize
         int size=200;
-
+        
         try {
             BitMatrix matrix = new MultiFormatWriter().encode(qrUrl, BarcodeFormat.QR_CODE, size, size);
             response.setContentType("image/png");
