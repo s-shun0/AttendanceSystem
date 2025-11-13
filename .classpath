@@ -13,5 +13,9 @@
 	<classpathentry kind="lib" path="lib/javase-3.5.3.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-j-9.5.0.jar"/>
 	<classpathentry kind="lib" path="lib/core-3.5.3.jar"/>
+	<classpathentry kind="lib" path="lib/taglibs-standard-compat-1.2.5.jar"/>
+	<classpathentry kind="lib" path="lib/taglibs-standard-impl-1.2.5.jar"/>
+	<classpathentry kind="lib" path="lib/taglibs-standard-jstlel-1.2.5 .jar"/>
+	<classpathentry kind="lib" path="lib/taglibs-standard-spec-1.2.5.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
