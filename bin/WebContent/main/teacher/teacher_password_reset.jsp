@@ -17,18 +17,24 @@
 	<div class="wrapper">
 		<!-- ヘッダー（JSで読み込み） -->
 		<div id="header"></div>
-		<h2 class="text-password_reset fs-4 mt-5">パスワードリセットURL送信</h2>
-		<main class="content">
-		<form action="PasswordResetSendExecute.action" method="post">
-			<label>メールアドレス</label>
-			<input class="form-control px-5 fs-5" autocomplete="off"
-				id="password-input" maxlength="30" name="email"
-				placeholder="内容未定のため保留中" style="ime-mode: disabled"
-				type="email" required />
-			<input class="btn btn btn-lg btn-primary" type="submit" name="email-send" value="メール送信"/>
-		</form>
+		<h2 class="text-password_reset fs-4 mt-5">教員パスワードリセット</h2>
+		<main class="password-reset-content">
+			<div class="pass_reset">
+				<label>パスワード変更</label>
+				<input class="form-control px-5 fs-5" autocomplete="off"
+					id="password-input" maxlength="20" name="password"
+					placeholder="内容未定のため保留中" style="ime-mode: disabled"
+					type="password" required />
+			</div>
+			<div class="pass_reset_again">
+				<label>再入力</label>
+				<input class="form-control px-5 fs-5" autocomplete="off"
+					id="password-input-again" maxlength="20" name="password_confirm"
+					placeholder="内容未定のため保留中" style="ime-mode: disabled"
+					type="password" required />
+			</div>
 		</main>
-
+		<input class="btn btn btn-lg btn-primary" type="submit" name="change" value="変更"/>
 		<!-- フッター（JSで読み込み） -->
 	    <div id="footer"></div>
     </div>
