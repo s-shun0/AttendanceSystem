@@ -1,10 +1,16 @@
 package Main;
 
+import java.io.IOException;
 import java.util.Properties;
+import java.util.UUID;
 
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jakarta.mail.Authenticator;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 import jakarta.mail.PasswordAuthentication;
@@ -12,52 +18,62 @@ import jakarta.mail.Session;
 import jakarta.mail.Transport;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
-import tool.Action; // ← 必須
 
-public class PasswordResetSendExecuteAction extends Action {
+@WebServlet("/Main/PasswordResetSendExecute.action")
+public class PasswordResetSendExecuteAction extends HttpServlet {
+    private static final long serialVersionUID = 1L;
 
-    @Override
-    public void execute(HttpServletRequest req, HttpServletResponse res)
-            throws Exception {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-        // 入力されたメールアドレス
-        String toEmail = req.getParameter("email");
+        String email = request.getParameter("email");
+        String messageText = "";
 
-        // リセットURL（例）
-        String resetLink = "http://localhost:8080/attendsystem/password_reset_form.jsp?email=" + toEmail;
+        // DBでユーザー確認（簡略化）
+        boolean userExists = true; // 実際はDB照合してください
 
-        // メール送信処理
-        Properties props = new Properties();
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
+        if (userExists) {
+            String token = UUID.randomUUID().toString();
 
-        Session session = Session.getInstance(props,
-                new jakarta.mail.Authenticator() {
-                    @Override
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("あなたのメールアドレス", "アプリパスワード");
-                    }
-                });
+            // DBにトークンを保存する処理（省略）
+            String resetUrl = "https://yourdomain.com/attendsystem/Main/PasswordResetForm.action?token=" + token;
 
-        try {
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("あなたのメールアドレス"));
-            message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(toEmail));
-            message.setSubject("パスワードリセット");
-            message.setText("以下のURLからパスワードを再設定してください：\n" + resetLink);
+            // Gmail SMTP設定
+            final String from = "your@gmail.com";               // Gmailアドレス
+            final String password = "生成されたアプリパスワード"; // アプリパスワード
 
-            Transport.send(message);
+            Properties props = new Properties();
+            props.put("mail.smtp.host", "smtp.gmail.com");
+            props.put("mail.smtp.port", "587");
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.enable", "true");
 
-            req.setAttribute("message", "メールを送信しました。");
-            req.getRequestDispatcher("main/common/password_reset_send.jsp").forward(req, res);
+            Session session = Session.getInstance(props, new Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(from, password);
+                }
+            });
 
-        } catch (MessagingException e) {
-            e.printStackTrace();
-            req.setAttribute("error", "メール送信に失敗しました。");
-            req.getRequestDispatcher("main/common/password_reset_send.jsp").forward(req, res);
+            try {
+                Message message = new MimeMessage(session);
+                message.setFrom(new InternetAddress(from));
+                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
+                message.setSubject("パスワードリセットのご案内");
+                message.setText("以下のURLからパスワードをリセットしてください。\n" + resetUrl);
+
+                Transport.send(message);
+                messageText = "メールを送信しました。";
+
+            } catch (MessagingException e) {
+                e.printStackTrace();
+                messageText = "メール送信に失敗しました。";
+            }
+        } else {
+            messageText = "指定されたメールアドレスは存在しません。";
         }
+
+        // JSPにメッセージを渡す
+        request.setAttribute("message", messageText);
+        request.getRequestDispatcher("/main/common/password_reset_send.jsp").forward(request, response);
     }
 }
