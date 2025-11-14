@@ -18,5 +18,7 @@
 	<classpathentry kind="lib" path="lib/taglibs-standard-jstlel-1.2.5 .jar"/>
 	<classpathentry kind="lib" path="lib/taglibs-standard-spec-1.2.5.jar"/>
 	<classpathentry kind="lib" path="lib/jakarta.mail-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/activation-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/javax.mail-1.6.2.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
