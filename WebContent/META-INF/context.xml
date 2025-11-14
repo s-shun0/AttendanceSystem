@@ -1,6 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE configuration>
-<!-- 上記はEclipseの警告を消すための記述です。 -->
-
-<Context reloadable="true">
-</Context>
+<Resource
+    name="jdbc/exam"
+    auth="Container"
+    type="javax.sql.DataSource"
+    driverClassName="com.mysql.cj.jdbc.Driver"
+    url="jdbc:mysql://localhost:3306/examdb?serverTimezone=Asia/Tokyo&amp;useSSL=false"
+    username="root"
+    password="your_password"
+    maxTotal="20"
+    maxIdle="5"
+    maxWaitMillis="10000"
+/>

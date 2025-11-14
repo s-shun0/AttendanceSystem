@@ -19,7 +19,8 @@
 		<div id="header"></div>
 		<h2 class="text-password_reset fs-4 mt-5">パスワードリセットURL送信</h2>
 		<main class="content">
-		<form action="PasswordResetSendExecute.action" method="post">
+		<form action="/attendsystem/Main/PasswordResetSendExecute.action" method="post">
+
 			<label>メールアドレス</label>
 			<input class="form-control px-5 fs-5" autocomplete="off"
 				id="password-input" maxlength="30" name="email"
