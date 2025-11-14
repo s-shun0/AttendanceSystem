@@ -4,12 +4,17 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
+	//認証済みフラグ:boolean true:認証済み
+	private boolean isAuthenticated;
+
 	private int id;
 	private String name;
 	private String email;
 	private String password;
 	private String job;
 	private String classnum;
+
+
 
 	public int getId() {
 		return id;
@@ -56,6 +61,14 @@ public class User implements Serializable {
 
 	public void setClassnum(String classnum) {
 		this.classnum = classnum;
+	}
+
+	public boolean isAuthenticated() {
+		return isAuthenticated;
+	}
+
+	public void setAuthenticated(boolean isAuthenticated) {
+		this.isAuthenticated = isAuthenticated;
 	}
 
 

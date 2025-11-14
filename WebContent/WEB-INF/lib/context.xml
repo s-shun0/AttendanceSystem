@@ -6,7 +6,7 @@
 		auth="Container"
 		type="javax.sql.DataSource"
 		driverClassName="com.mysql.cj.jdbc.Driver"
-		url="jdbc:mysql://localhost:3306/test_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Tokyo"
+		url="jdbc:mysql://localhost:3306/test_db?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=Asia/Tokyo"
 		username="root"
 		password=""
 		maxActive="20"

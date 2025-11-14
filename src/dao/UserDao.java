@@ -14,7 +14,7 @@ public class UserDao extends Dao{
 
 	private String baseSql = "select * from users where id=?";
 
-	public User get(int id,String pass) throws Exception {
+	public User login(int id,String pass) throws Exception {
 		User user = new User();
 		Connection connection = getConnection();
 		PreparedStatement statement = null;
@@ -224,7 +224,7 @@ public class UserDao extends Dao{
 
 
 		try{
-			User old = get(user.getId(),user.getPass());
+			User old = login(user.getId(),user.getPass());
 			if (old == null){
 				//学生が存在しない場合
 				//プリペアードスタートメントにINSERT文をセット
