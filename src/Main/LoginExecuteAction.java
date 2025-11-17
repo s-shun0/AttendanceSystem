@@ -1,4 +1,4 @@
-package Main;
+package src.Main;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,9 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import bean.User;
-import dao.UserDao;
-import tool.Action;
+import src.dao.UserDao;
+import src.tool.Action;
 
 
 
