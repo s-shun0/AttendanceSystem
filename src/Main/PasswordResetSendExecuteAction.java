@@ -1,4 +1,4 @@
-package Main;
+package src.Main;
 
 import java.io.IOException;
 import java.util.Properties;
