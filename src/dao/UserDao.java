@@ -14,7 +14,7 @@ public class UserDao extends Dao{
 
 	private String baseSql = "select * from users where id=?";
 
-	public User login(int id,String pass) throws Exception {
+	public User login(String id,String pass) throws Exception {
 		User user = new User();
 		Connection connection = getConnection();
 		PreparedStatement statement = null;
@@ -23,7 +23,7 @@ public class UserDao extends Dao{
 			//プリペアードスタートメントにSQL文をセット
 			statement = connection.prepareStatement("select * from users where id=? and password=?");
 			//学生番号をバインド
-			statement.setInt(1,id);
+			statement.setString(1,id);
 			statement.setString(2, pass);
 			//実行
 			ResultSet rSet = statement.executeQuery();

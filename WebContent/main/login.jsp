@@ -1,74 +1,115 @@
-<%-- ログインJSP --%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:import url="/main/common/base.jsp">
-	<c:param  name="title">
-		得点管理システム
-	</c:param>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+        crossorigin="anonymous">
+    <title>出席管理システム - ログイン</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <div id="wrapper" class="container">
+        <!-- ヘッダー -->
+        <header class="d-flex flex-wrap justify-content-center py-3 px-5 mb-4 border-bottom border-2 bg-primary bg-opacity-10 bg-gradient">
+            <h1 class="fs-4 mb-0">出席管理システム</h1>
+        </header>
 
-	<c:param name="scripts">
-		<script type="text/javascript">
-			$(function() {
-				// 「パスワードを表示」が変更された時の処理
-				$('#password-display').change(function() {
-					if ($(this).prop('checked')) {
-						// チェックが入っている場合
-						// パスワード入力欄をテキストにする
-						$('#password-input').attr('type', 'text');
-					} else {
-						// チェックが外れている場合
-						// パスワード入力欄をパスワードにする
-						$('#password-input').attr('type', 'password');
-					}
-				});
-			});
-		</script>
-	</c:param>
+        <!-- メインコンテンツ -->
+        <div class="row justify-content-center">
+            <main class="col-lg-6 col-md-8 col-sm-10">
+                <section class="border rounded shadow-sm p-4">
+                    <h2 class="h3 mb-4 text-center bg-secondary bg-opacity-10 py-3 rounded">ログイン</h2>
 
-	<c:param name="content">
-		<section class="w-75 text-center m-auto border pb-3">
-			<form action = "LoginExecute.action" method="post">
-				<div id="wrap_box">
-					<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2">ログイン</h2>
-					<c:if test="${errors.size()>0}">
-						<div>
-							<ul>
-								<c:forEach var="error" items="${errors}">
-									<li>${error}</li>
-								</c:forEach>
-							</ul>
-						</div>
-					</c:if>
-					<div>
-						<!-- ＩＤ -->
-						<div class="form-floating mx-5">
-							<input class="form-control px-5 fs-5" autocomplete="off"
-								id="id-input" maxlength="20" name="id" placeholder="半角でご入力下さい"
-								style="ime-mode: disabled" type="text" value="${id}" required />
-							<label>ＩＤ</label>
-						</div>
-						<!-- パスワード -->
-						<div class="form-floating mx-5 mt-3">
-							<input class="form-control px-5 fs-5" autocomplete="off"
-								id="password-input" maxlength="20" name="password"
-								placeholder="20文字以内の半角英数字でご入力下さい" style="ime-mode: disabled"
-								type="password" required />
-							<label>パスワード</label>
-						</div>
-						<div class="form-check mt-3">
-							<label class="form-check-label" for="password-display">
-								<input class="form-check-input" id="password-display" name="chk_d_ps" type="checkbox" />
-								パスワードを表示
-							</label>
-						</div>
-					</div>
+                    <!-- エラーメッセージ表示 -->
+                    <c:if test="${not empty errors}">
+                        <div class="alert alert-danger" role="alert">
+                            <ul class="mb-0">
+                                <c:forEach var="error" items="${errors}">
+                                    <li>${error}</li>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                    </c:if>
 
-					<div class="mt-4">
-						<input class="w-25 btn btn-lg btn-primary" type="submit" name="login" value="ログイン"/>
-					</div>
-				</div>
-			</form>
-		</section>
-	</c:param>
-</c:import>
+                    <!-- ログインフォーム -->
+                   	<form action="${pageContext.request.contextPath}/LoginExecute.action" method="post">
+                        <!-- ＩＤ入力 -->
+                        <div class="mb-3">
+                            <label for="id-input" class="form-label">ＩＤ</label>
+                            <input type="text"
+                                   class="form-control form-control-lg"
+                                   id="id-input"
+                                   name="id"
+                                   maxlength="20"
+                                   placeholder="半角でご入力ください"
+                                   autocomplete="off"
+                                   inputmode="latin"
+                                   required>
+                        </div>
+
+                        <!-- パスワード入力 -->
+                        <div class="mb-3">
+                            <label for="password-input" class="form-label">パスワード</label>
+                            <input type="password"
+                                   class="form-control form-control-lg"
+                                   id="password-input"
+                                   name="password"
+                                   maxlength="20"
+                                   placeholder="20文字以内の半角英数字"
+                                   autocomplete="current-password"
+                                   inputmode="latin"
+                                   required>
+                        </div>
+
+                        <!-- パスワード表示チェックボックス -->
+                        <div class="form-check mb-4">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   id="password-display">
+                            <label class="form-check-label" for="password-display">
+                                パスワードを表示
+                            </label>
+                        </div>
+
+                        <!-- ログインボタン -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                ログイン
+                            </button>
+                        </div>
+                    </form>
+                </section>
+            </main>
+        </div>
+
+        <!-- フッター -->
+        <footer class="py-3 my-4 bg-dark bg-opacity-10 border-top text-center">
+            <p class="mb-0 text-muted">&copy; 2024 出席管理システム</p>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+
+    <!-- パスワード表示/非表示の切り替え -->
+    <script>
+        $(function() {
+            $('#password-display').on('change', function() {
+                const passwordInput = $('#password-input');
+                if ($(this).prop('checked')) {
+                    passwordInput.attr('type', 'text');
+                } else {
+                    passwordInput.attr('type', 'password');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

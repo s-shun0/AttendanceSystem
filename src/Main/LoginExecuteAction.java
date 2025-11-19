@@ -1,69 +1,66 @@
-package src.Main;
-
+package Main;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import src.dao.UserDao;
-import src.tool.Action;
-
-
-
+import bean.User;
+import dao.UserDao;
+import tool.Action;
 
 public class LoginExecuteAction extends Action {
+    @Override
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+        // エラーメッセージを格納するリスト
+        List<String> errors = new ArrayList<String>();
 
-	@Override
-	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+        // セッションを取得
+        HttpSession session = req.getSession();
 
-		//ローカル変数の宣言 1
-		String url = "";
-		int id;
-		String password = "";
+        // フォームからパラメータを取得
+        String id = req.getParameter("id");
+        String password = req.getParameter("password");
 
+        // 入力値の検証
+        if (id == null || id.trim().isEmpty()) {
+            errors.add("IDを入力してください");
+        }
+        if (password == null || password.trim().isEmpty()) {
+            errors.add("パスワードを入力してください");
+        }
 
-		//リクエストパラメータ―の取得 2
-		String idstr = req.getParameter("id");// 教員ID
-		id = Integer.parseInt(idstr);
-		password = req.getParameter("password");//パスワード
+        // エラーがある場合はログイン画面に戻る
+        if (!errors.isEmpty()) {
+            req.setAttribute("errors", errors);
+            req.setAttribute("id", id);
+            RequestDispatcher dispatcher = req.getRequestDispatcher("login.jsp");
+            dispatcher.forward(req, res);
+            return;
+        }
 
-		//DBからデータ取得 3
-		UserDao uDao = new UserDao();
-		User user = uDao.login(id,password);
+        // DAOを使用してユーザー認証
+        UserDao userDao = new UserDao();
+        User user = userDao.login(id, password);
 
-		//ビジネスロジック 4
-		//DBへデータ保存 5
-		//レスポンス値をセット 6
-		//フォワード 7
-		//条件で手順4~7の内容が分岐
-		if (user != null) {// 認証成功の場合
-			// セッション情報を取得
-			HttpSession session = req.getSession(true);
-			// 認証済みフラグを立てる
-			user.setAuthenticated(true);
-			// セッションにログイン情報を保存
-			session.setAttribute("user", user);
+        if (user != null) {
+            // ログイン成功
+            // セッションにユーザー情報を保存
+            session.setAttribute("user", user);
 
-			//リダイレクト
-			url = "main/Menu.action";
-			res.sendRedirect(url);
-		} else {
-			// 認証失敗の場合
-			// エラーメッセージをセット
-			List<String> errors = new ArrayList<String>();
-			errors.add("IDまたはパスワードが確認できませんでした");
-			req.setAttribute("errors", errors);
-			// 入力された教員IDをセット
-			req.setAttribute("id", id);
+            // MenuActionにフォワード
+            RequestDispatcher dispatcher = req.getRequestDispatcher("Menu.action");
+            dispatcher.forward(req, res);
+        } else {
+            // ログイン失敗
+            errors.add("IDまたはパスワードが正しくありません");
+            req.setAttribute("errors", errors);
+            req.setAttribute("id", id);
 
-			//フォワード
-			url = "login.jsp";
-			req.getRequestDispatcher(url).forward(req, res);
-		}
-
-	}
-
+            RequestDispatcher dispatcher = req.getRequestDispatcher("login.jsp");
+            dispatcher.forward(req, res);
+        }
+    }
 }
-
