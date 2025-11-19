@@ -1,79 +1,70 @@
-package src.Main;
+package Main;
 
-import java.io.IOException;
-import java.util.Properties;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.UUID;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jakarta.mail.Authenticator;
-import jakarta.mail.Message;
-import jakarta.mail.MessagingException;
-import jakarta.mail.PasswordAuthentication;
-import jakarta.mail.Session;
-import jakarta.mail.Transport;
-import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.MimeMessage;
+import dao.UserDao;
+import tool.Action; // 共通Action基底クラス
 
-@WebServlet("/Main/PasswordResetSendExecute.action")
-public class PasswordResetSendExecuteAction extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+public class PasswordResetSendExecuteAction extends Action {
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @Override
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+        String email = req.getParameter("email");
 
-        String email = request.getParameter("email");
-        String messageText = "";
-
-        // DBでユーザー確認（簡略化）
-        boolean userExists = true; // 実際はDB照合してください
-
-        if (userExists) {
-            String token = UUID.randomUUID().toString();
-
-            // DBにトークンを保存する処理（省略）
-            String resetUrl = "https://yourdomain.com/attendsystem/Main/PasswordResetForm.action?token=" + token;
-
-            // Gmail SMTP設定
-            final String from = "your@gmail.com";               // Gmailアドレス
-            final String password = "生成されたアプリパスワード"; // アプリパスワード
-
-            Properties props = new Properties();
-            props.put("mail.smtp.host", "smtp.gmail.com");
-            props.put("mail.smtp.port", "587");
-            props.put("mail.smtp.auth", "true");
-            props.put("mail.smtp.starttls.enable", "true");
-
-            Session session = Session.getInstance(props, new Authenticator() {
-                protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication(from, password);
-                }
-            });
-
-            try {
-                Message message = new MimeMessage(session);
-                message.setFrom(new InternetAddress(from));
-                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
-                message.setSubject("パスワードリセットのご案内");
-                message.setText("以下のURLからパスワードをリセットしてください。\n" + resetUrl);
-
-                Transport.send(message);
-                messageText = "メールを送信しました。";
-
-            } catch (MessagingException e) {
-                e.printStackTrace();
-                messageText = "メール送信に失敗しました。";
-            }
-        } else {
-            messageText = "指定されたメールアドレスは存在しません。";
+        // 1. ユーザー存在確認
+        UserDao userDao = new UserDao();
+        Integer userId = userDao.getUserIdByEmail(email);
+        if(userId == null) {
+            req.setAttribute("message", "そのメールアドレスは登録されていません。");
+            req.getRequestDispatcher("/password_reset_send.jsp").forward(req, res);
+            return;
         }
 
-        // JSPにメッセージを渡す
-        request.setAttribute("message", messageText);
-        request.getRequestDispatcher("/main/common/password_reset_send.jsp").forward(request, response);
+        // 2. トークン生成
+        String token = UUID.randomUUID().toString();
+
+        // 3. トークンをDBに保存（有効期限30分）
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = DBConnection.getConnection();
+            String sql = "INSERT INTO password_reset_tokens(user_id, token, expiration_time, used) VALUES (?, ?, ?, ?)";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, userId);
+            ps.setString(2, token);
+
+            // 有効期限30分後を計算
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.MINUTE, 30);
+            Timestamp expire = new Timestamp(cal.getTimeInMillis());
+
+            ps.setTimestamp(3, expire);
+            ps.setBoolean(4, false);
+            ps.executeUpdate();
+        } finally {
+            // 明示的に close
+            if(ps != null) ps.close();
+            if(conn != null) conn.close();
+        }
+
+        // 4. メール送信
+        String resetUrl = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort()
+                + req.getContextPath() + "/password_reset_form.jsp?token=" + token;
+
+        String subject = "パスワードリセットURLのご案内";
+        String body = "以下のリンクをクリックしてパスワードをリセットしてください。\n\n" + resetUrl
+                    + "\n\n※このURLは30分間有効です。";
+
+        EmailUtil.sendEmail(email, subject, body); // EmailUtilでメール送信処理を実装
+
+        req.setAttribute("message", "パスワードリセット用のURLを送信しました。メールを確認してください。");
+        req.getRequestDispatcher("/password_reset_send.jsp").forward(req, res);
     }
 }
