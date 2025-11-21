@@ -7,7 +7,7 @@ public class User implements Serializable {
 	//認証済みフラグ:boolean true:認証済み
 	private boolean isAuthenticated;
 
-	private int id;
+	private String id;
 	private String name;
 	private String email;
 	private String password;
@@ -16,11 +16,11 @@ public class User implements Serializable {
 
 
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

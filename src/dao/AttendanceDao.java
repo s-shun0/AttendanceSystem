@@ -1,4 +1,4 @@
-package src.dao;
+package dao;
 
 
 import java.sql.Connection;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import src.bean.Attendance;
+import bean.Attendance;
 
 
 public class AttendanceDao extends Dao{
