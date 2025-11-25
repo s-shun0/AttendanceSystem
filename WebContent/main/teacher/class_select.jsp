@@ -30,7 +30,7 @@
 				<li><a href="/attendsystem/Main/ClassSelectExcute.action?classnum=61">61教室</a></li>
 				<li><a href="/attendsystem/Main/ClassSelectExcute.action?classnum=62">62教室</a></li>
 				<li><a href="/attendsystem/Main/ClassSelectExcute.action?classnum=63">63教室</a></li>
-				<li><a href="/attendsystem/Main/ClassSelectExcute.action?classnum=64">64教室b</a></li>
+				<li><a href="/attendsystem/Main/ClassSelectExcute.action?classnum=64">64教室</a></li>
 			</ul>
 		</main>
 		<!-- フッター（JSで読み込み） -->
