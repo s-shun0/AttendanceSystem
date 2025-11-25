@@ -27,11 +27,11 @@
     <ul>
       <li>メニュー</li>
       <hr>
-      <li><a href="index.html">クラスセレクト</a></li>
-      <li><a href="character.html">欠席アーカイブ</a></li>
-      <li><a href="lines.html">QRコードジェネレーター</a></li>
-      <li><a href="audios.html">出席トラッカー</a></li>
-      <li><a href="voice_actors.html">その他の編集</a></li>
+      <li><a href="/attendsystem/main/teacher/class_select.jsp">クラスセレクト</a></li>
+      <li><a href="/attendsystem/main/teacher/absence_archive.jsp">欠席アーカイブ</a></li>
+      <li><a href="/attendsystem/main/teacher/class_select.jsp">QRコードジェネレーター</a></li>
+      <li><a href="/attendsystem/main/teacher/qr_attend.jsp">出席トラッカー</a></li>
+      <li><a href="/attendsystem/main/teacher/other_edits.jsp">その他の編集</a></li>
     </ul>
   </nav>
 </c:if>

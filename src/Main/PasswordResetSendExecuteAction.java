@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import dao.UserDao;
 import tool.Action; // 共通Action基底クラス
 
-public class PasswordResetSendExecuteAction extends Action {
+public class PasswordResetSendExecuteAction extends Action{
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
@@ -20,7 +20,7 @@ public class PasswordResetSendExecuteAction extends Action {
 
         // 1. ユーザー存在確認
         UserDao userDao = new UserDao();
-        Integer userId = userDao.getUserIdByEmail(email);
+        String userId = userDao.getUserId(email);
         if(userId == null) {
             req.setAttribute("message", "そのメールアドレスは登録されていません。");
             req.getRequestDispatcher("/password_reset_send.jsp").forward(req, res);
@@ -34,10 +34,10 @@ public class PasswordResetSendExecuteAction extends Action {
         Connection conn = null;
         PreparedStatement ps = null;
         try {
-            conn = DBConnection.getConnection();
+//            Connection conn = getConnection();
             String sql = "INSERT INTO password_reset_tokens(user_id, token, expiration_time, used) VALUES (?, ?, ?, ?)";
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, userId);
+            ps.setString(1, userId);
             ps.setString(2, token);
 
             // 有効期限30分後を計算
@@ -62,7 +62,7 @@ public class PasswordResetSendExecuteAction extends Action {
         String body = "以下のリンクをクリックしてパスワードをリセットしてください。\n\n" + resetUrl
                     + "\n\n※このURLは30分間有効です。";
 
-        EmailUtil.sendEmail(email, subject, body); // EmailUtilでメール送信処理を実装
+//        EmailUtil.sendEmail(email, subject, body); // EmailUtilでメール送信処理を実装
 
         req.setAttribute("message", "パスワードリセット用のURLを送信しました。メールを確認してください。");
         req.getRequestDispatcher("/password_reset_send.jsp").forward(req, res);
