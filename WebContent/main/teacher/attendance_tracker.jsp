@@ -18,7 +18,7 @@
 		<!-- ヘッダー（JSで読み込み） -->
 		<div id="header"></div>
 		<main class="content">
-			<h2 class="text-error fs-4 mt-5">⚠エラーが発生しました</h2>
+			
 		</main>
 		<!-- フッター（JSで読み込み） -->
 	    <div id="footer"></div>

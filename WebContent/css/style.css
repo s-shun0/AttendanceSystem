@@ -56,6 +56,19 @@ header {
   text-align: center;
 }
 
+.class-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.class-list li {
+    list-style: none;
+    width: 250px; /* 1つの li の横幅を固定 */
+    text-align: center;
+}
+
 /* ============================
 	student_password_reset.jsp
 ============================= */
