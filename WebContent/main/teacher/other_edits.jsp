@@ -18,7 +18,11 @@
 		<!-- ヘッダー（JSで読み込み） -->
 		<div id="header"></div>
 		<main class="content">
-			<h2 class="text-error fs-4 mt-5">⚠エラーが発生しました</h2>
+			<ul class="class-list">
+				<li><a href="/attendsystem/Main/ClassSelectExcute.action">クラスの生徒情報一覧</a></li>
+				<li><a href="/attendsystem/Main/ClassSelectExcute.action">所属クラスの更新</a></li>
+				<li><a href="/attendsystem/Main/ClassSelectExcute.action">教員の情報更新</a></li>
+			</ul>
 		</main>
 		<!-- フッター（JSで読み込み） -->
 	    <div id="footer"></div>
