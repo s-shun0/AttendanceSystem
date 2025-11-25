@@ -2,7 +2,7 @@
     <wb-module deploy-name="attendsystem">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/build/classes"/>
-        <wb-resource deploy-path="/" source-path="/"/>
+        <wb-resource deploy-path="/" source-path="/src"/>
         <property name="context-root" value="attendsystem"/>
         <property name="java-output-path" value="/attendsystem/build/classes"/>
     </wb-module>
