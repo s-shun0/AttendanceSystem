@@ -3,7 +3,6 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import bean.ClassNum;
 
@@ -11,8 +10,8 @@ public class ClassNumDao extends Dao{
 
 
 	//クラスを選択後、クラス情報の取得
-	public ArrayList<ClassNum> get(int classnum) throws Exception{
-		ArrayList<ClassNum> num = new ArrayList();
+	public ClassNum get(String classnum) throws Exception{
+		ClassNum num = new ClassNum();
 		Connection connection = getConnection();
 		PreparedStatement statement = null;
 
@@ -41,4 +40,6 @@ public class ClassNumDao extends Dao{
 
 		return num;
 	}
+
+
 }

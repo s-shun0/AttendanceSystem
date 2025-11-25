@@ -13,10 +13,10 @@ public class VerifyServlet extends HttpServlet {
             throws ServletException, IOException {
         String token = req.getParameter("token");
 
-        if (token != null && token.equals(QRcodeServlet.getLatestToken())) {
-            res.getWriter().println("出席成功！");
-        } else {
-            res.getWriter().println("無効または期限切れのQRコードです。");
-        }
+///       if (token != null && token.equals(QRcodeServlet.getLatestToken())) {
+//            res.getWriter().println("出席成功！");
+//        } else {
+//            res.getWriter().println("無効または期限切れのQRコードです。");
+//        }
     }
 }

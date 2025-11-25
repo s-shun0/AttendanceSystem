@@ -31,7 +31,7 @@ public class UserDao extends Dao{
 
 			if (rSet.next()){
 				//学生インスタンスに検索結果をセット
-				user.setId(rSet.getInt("id"));
+				user.setId(rSet.getString("id"));
 				user.setName(rSet.getString("name"));
 				user.setEmail(rSet.getString("email"));
 				user.setPass(rSet.getString("password"));
@@ -124,7 +124,7 @@ public class UserDao extends Dao{
 
 			if (rSet.next()){
 				//学生インスタンスに検索結果をセット
-				user.setId(rSet.getInt("id"));
+				user.setId(rSet.getString("id"));
 				user.setName(rSet.getString("name"));
 				user.setEmail(rSet.getString("email"));
 				user.setPass(rSet.getString("password"));
@@ -181,7 +181,7 @@ public class UserDao extends Dao{
 
 			if (rSet.next()){
 				//学生インスタンスに検索結果をセット
-				user.setId(rSet.getInt("id"));
+				user.setId(rSet.getString("id"));
 				user.setName(rSet.getString("name"));
 				user.setEmail(rSet.getString("email"));
 				user.setPass(rSet.getString("password"));
@@ -231,7 +231,7 @@ public class UserDao extends Dao{
 				statement = connection.prepareStatement(
 						"insert into users (id,name,email,password,job,class) values(?,?,?,?,?,?)");
 				//プリペアードスタートメントに値をバインド
-				statement.setInt(1, user.getId());
+				statement.setString(1, user.getId());
 				statement.setString(2,user.getName());
 				statement.setString(3, user.getEmail());
 				statement.setString(4,user.getPass());
@@ -276,7 +276,7 @@ public class UserDao extends Dao{
 		try{
 			statement = connection.prepareStatement("update users set password=? where id=? and name=? and email=?");
 			statement.setString(1,newpass);
-			statement.setInt(2,user.getId() );
+			statement.setString(2,user.getId() );
 			statement.setString(3, user.getName());
 			statement.setString(4,user.getEmail());
 
@@ -309,6 +309,16 @@ public class UserDao extends Dao{
 		} else{
 			return false;
 		}
+	}
+
+
+
+
+
+
+	public String getUserId(String email) {
+		String userId = "";
+		return userId;
 	}
 
 }
