@@ -111,7 +111,7 @@ public class UserDao extends Dao{
 //	}
 
 	public List<User> class_(int classnum) throws Exception{
-		ArrayList list = new ArrayList();
+		List<User> list = new ArrayList<User>();
 		Connection connection = getConnection();
 		PreparedStatement statement = null;
 		try{
@@ -122,7 +122,7 @@ public class UserDao extends Dao{
 
 			ResultSet rSet = statement.executeQuery();
 
-			if (rSet.next()){
+			while (rSet.next()){
 				//学生インスタンスに検索結果をセット
 				user.setId(rSet.getString("id"));
 				user.setName(rSet.getString("name"));
@@ -132,10 +132,7 @@ public class UserDao extends Dao{
 				user.setClassnum(rSet.getString("class"));
 
 				list.add(user);
-			} else{
-				list = null;
 			}
-
 		}catch(Exception e){
 			throw e;
 		}finally{
