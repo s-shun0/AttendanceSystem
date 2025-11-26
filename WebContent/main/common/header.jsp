@@ -27,7 +27,7 @@
     <ul>
       <li>メニュー</li>
       <hr>
-      <li><a href="/attendsystem/main/teacher/class_select.jsp">クラスセレクト</a></li>
+      <li><a href="/attendsystem/Teacher/ClassSelect.action">クラスセレクト</a></li>
       <li><a href="/attendsystem/main/teacher/absence_archive.jsp">欠席アーカイブ</a></li>
       <li><a href="/attendsystem/main/teacher/class_select.jsp">QRコードジェネレーター</a></li>
       <li><a href="/attendsystem/main/teacher/qr_attend.jsp">出席トラッカー</a></li>
