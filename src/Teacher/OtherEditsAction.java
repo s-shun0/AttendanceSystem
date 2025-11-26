@@ -10,6 +10,6 @@ public class OtherEditsAction extends Action {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
         //other_edits.jsp にフォワード
-        req.getRequestDispatcher("/other_edits.jsp").forward(req, res);
+        req.getRequestDispatcher("/main/teacher/other_edits.jsp").forward(req, res);
     }
 }
