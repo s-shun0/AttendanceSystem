@@ -1,4 +1,4 @@
-package Main;
+package Teacher;
 
 import java.util.List;
 
