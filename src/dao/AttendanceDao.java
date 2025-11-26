@@ -90,7 +90,7 @@ public class AttendanceDao extends Dao{
 	}
 
 	public List<Attendance> all(int id)throws Exception{
-		List<Attendance> list = new ArrayList();
+		List<Attendance> list = new ArrayList<Attendance>();
 		Connection connection = getConnection();
 		PreparedStatement statement = null;
 
